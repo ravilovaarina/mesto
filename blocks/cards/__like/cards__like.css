@@ -1,0 +1,11 @@
+.cards__like {
+    background: transparent url(../../../images/like.svg);
+    display: flex;
+    background-position: center;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    height: 19px;
+    width: 22px;
+    border: none;
+    margin: 0;
+}
