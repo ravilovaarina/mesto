@@ -29,46 +29,65 @@
                     <img src="images/2009.jpg" alt="Картинка 2009" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2009</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2008.jpg" alt="Картинка 2008" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2008</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2007.jpg" alt="Картинка 2007" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2007</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2006.jpg" alt="Картинка 2006" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2006</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2005.jpg" alt="Картинка 2005" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2005</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2004.jpg" alt="Картинка 2004" class="cards__pic">
                     <div class="cards__info">
                         <h3 class="cards__text">2004</h3>
-                        <button class="cards__like"></button>
+                        <button class="cards__button-like"></button>
                     </div>
                 </div>
             </section>
         </main>
+        <footer class="footer">
+            <p class="footer__text">&copy; 2023 Mesto Russia</p>
+        </footer>
+        <div class="popup">
+            <div class="popup__container">
+                <button class="popup__button-closed"></button>
+                <h3 class="popup__name">Редактировать профиль</h3>
+                <form class="popup__form">
+                    <label for="name" class="popup__label">
+                        <input type="text" class="popup__input" id="name" placeholder="Имя" required minlength="2" maxlength="40">
+                    </label>
+                    <label for="bio" class="popup__label">
+                        <input type="text" class="popup__input" id="bio" placeholder="Описание" required minlength="2" maxlength="40">
+                    </label>
+                    <button class="popup__save-button">Сохранить</button>
+                </form>
+            </div>
+        </div>
+        <script src="./scripts/index.js"></script>
     </div>
 </body>
 
