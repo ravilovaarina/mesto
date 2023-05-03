@@ -4,6 +4,11 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
     outline: none;
-    padding-bottom: 13px;
+    padding: 0 0 13px 0;
     box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif; 
+    font-style: normal; 
+    font-weight: 400; 
+    font-size: 14px; 
+    line-height: 17px; 
 }

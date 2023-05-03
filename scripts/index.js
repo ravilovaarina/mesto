@@ -2,11 +2,11 @@
 const buttonPopupOpen = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup');
 const buttonPopupclose = document.querySelector('.popup__button-closed');
-let formPopup = document.querySelector(('.popup__form'));
-let nameInput = document.getElementById('name');
-let bioInput = document.getElementById('bio');
-let profileName = document.querySelector('.profile__name');
-let profileBio = document.querySelector('.profile__bio');
+const formPopup = document.querySelector('.popup__form');
+const nameInput = document.getElementById('name');
+const bioInput = document.getElementById('bio');
+const profileName = document.querySelector('.profile__name');
+const profileBio = document.querySelector('.profile__bio');
 
 // функции для popup-edit
 function popupClose() {

@@ -9,62 +9,62 @@
     <title>Mesto</title>
 </head>
 
-<body>
+<body class="body">
     <div class="page">
         <header class="header">
-            <img src="./images/logo.svg" alt="" class="header__logo">
+            <img src="./images/logo.svg" alt="Логотип" class="header__logo">
         </header>
         <main class="content">
             <section class="profile">
                 <img src="images/kusto.jpg" alt="Аватар профиля" class="profile__avatar">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <buttton class="profile__edit-button"></buttton>
-                    <h2 class="profile__bio">Исследователь океана</h2>
+                    <button class="profile__edit-button"></button>
+                    <p class="profile__bio">Исследователь океана</p>
                 </div>
-                <button class="profile__add-button"></button>
+                <button type="button" class="profile__add-button"></button>
             </section>
             <section class="cards">
                 <div class="cards__item">
                     <img src="images/2009.jpg" alt="Картинка 2009" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2009</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2009</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2008.jpg" alt="Картинка 2008" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2008</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2008</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2007.jpg" alt="Картинка 2007" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2007</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2007</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2006.jpg" alt="Картинка 2006" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2006</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2006</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2005.jpg" alt="Картинка 2005" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2005</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2005</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
                 <div class="cards__item">
                     <img src="images/2004.jpg" alt="Картинка 2004" class="cards__pic">
                     <div class="cards__info">
-                        <h3 class="cards__text">2004</h3>
-                        <button class="cards__button-like"></button>
+                        <h2 class="cards__text">2004</h2>
+                        <button type="button" class="cards__button-like"></button>
                     </div>
                 </div>
             </section>
@@ -74,16 +74,14 @@
         </footer>
         <div class="popup">
             <div class="popup__container">
-                <button class="popup__button-closed"></button>
+                <button type="button" class="popup__button-closed"></button>
                 <h3 class="popup__name">Редактировать профиль</h3>
-                <form class="popup__form">
-                    <label for="name" class="popup__label">
-                        <input type="text" class="popup__input" id="name" placeholder="Имя" required minlength="2" maxlength="40">
-                    </label>
-                    <label for="bio" class="popup__label">
-                        <input type="text" class="popup__input" id="bio" placeholder="Описание" required minlength="2" maxlength="40">
-                    </label>
-                    <button class="popup__save-button">Сохранить</button>
+                <form name="profile" class="popup__form">
+                    <input type="text" name="name" class="popup__input" id="name" placeholder="Имя" required
+                        minlength="2" maxlength="40">
+                    <input type="text" name="bio" class="popup__input" id="bio" placeholder="Описание" required
+                        minlength="2" maxlength="40">
+                    <button type="submit" class="popup__save-button">Сохранить</button>
                 </form>
             </div>
         </div>
