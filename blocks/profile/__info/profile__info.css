@@ -3,7 +3,6 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(min-content, max-content));
     gap: 16px 18px;
-    flex-wrap: wrap;
     align-items: baseline;
 }
 
@@ -12,8 +11,8 @@
         margin: 0 auto 36px;
         text-align: center;
         display: flex;
-        flex-wrap: wrap;
         gap: 14px 10px;
+        flex-wrap: wrap;
         justify-content: center;
     }
 }
