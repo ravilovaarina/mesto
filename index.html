@@ -60,16 +60,18 @@
                 <form name="profile" class="popup__form popup__form_type_add">
                     <input type="text" name="place" class="popup__input" id="place" placeholder="название" required
                         minlength="2" maxlength="40">
-                    <input type="url" name="link" class="popup__input" id="url" placeholder="ссылка на картинку" required
-                        minlength="2" maxlength="10000">
+                    <input type="url" name="link" class="popup__input" id="url" placeholder="ссылка на картинку"
+                        required minlength="2" maxlength="10000">
                     <button type="submit" class="popup__save-button">Создать</button>
                 </form>
             </div>
         </div>
         <div class="popup popup-image">
-            <button type="button" class="popup__button-closed popup-image__button-closed"></button>
-            <img alt="Картинка" class="popup-image__pic">
-            <p class="popup-image__caption">Исследователь океана</p>
+            <div class="popup-image__container">
+                <button type="button" class="popup__button-closed popup-image__button-closed"></button>
+                <img alt="Картинка" class="popup-image__pic">
+                <p class="popup-image__caption"></p>
+            </div>
         </div>
         <script src="./scripts/index.js"></script>
     </div>

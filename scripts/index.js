@@ -43,6 +43,12 @@ let initialCards = [
         link: 'https://images.unsplash.com/photo-1556515268-97d056bdb5a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80'
     }
 ];
+//объявление переменных для попапа с фотграфиями
+const popupImage = document.querySelector('.popup-image');
+const popupPic = document.querySelector('.popup-image__pic')
+const closePopupImageButton = document.querySelector('.popup-image__button-closed')
+const popupCaption = document.querySelector('.popup-image__caption')
+// объявление переменных для лайков
 
 
 // функции для popup
@@ -74,21 +80,44 @@ function addFormSubmit(evt) {
         link: urlInput.value
     };
     initialCards.unshift(newCard);
-
     const cardsElement = cardTemplate.querySelector('.cards__item').cloneNode(true);
     cardsElement.querySelector('.cards__pic').src = initialCards[0].link;
     cardsElement.querySelector('.cards__text').textContent = initialCards[0].name;
+    cardsElement.querySelector('.cards__pic').alt = initialCards[0].name;
     cards.prepend(cardsElement);
 
     initialCards.forEach(function () {
         const trash = cardsElement.querySelector('.cards__button-delete');
         trash.addEventListener('click', deleteCard);
+
+        const pic = cardsElement.querySelector('.cards__pic');
+        pic.addEventListener('click', function () {
+            popupOpen(popupImage)
+        });
+        closePopupImageButton.addEventListener('click', function () {
+            popupClose(popupImage)
+        });
+        pic.addEventListener('click', ShowPhoto);
+        function ShowPhoto(evt) {
+            popupPic.src = evt.target.src;
+            popupCaption.textContent = evt.target.alt;
+        }
+        const likeButton = cardsElement.querySelector('.cards__button-like')
+        likeButton.addEventListener('click', likeToggle);
     })
+    popupClose(popupAdd);
 }
+function openPopupAdd() {
+    placeInput.value = null;
+    urlInput.value = null;
+};
+
 // вызовы функция для popup_type_add
 openPopupAddButton.addEventListener('click', function () {
     popupOpen(popupAdd);
 });
+
+openPopupAddButton.addEventListener('click', openPopupAdd);
 
 closePopupAddButton.addEventListener('click', function () {
     popupClose(popupAdd);
@@ -114,9 +143,24 @@ for (let i = 0; i < initialCards.length; i += 1) {
     const cardsElement = cardTemplate.querySelector('.cards__item').cloneNode(true);
     cardsElement.querySelector('.cards__pic').src = initialCards[i].link;
     cardsElement.querySelector('.cards__text').textContent = initialCards[i].name;
+    cardsElement.querySelector('.cards__pic').alt = initialCards[i].name;
     cards.append(cardsElement);
     const trash = cardsElement.querySelector('.cards__button-delete');
     trash.addEventListener('click', deleteCard);
+    const pic = cardsElement.querySelector('.cards__pic');
+    pic.addEventListener('click', function () {
+        popupOpen(popupImage)
+    });
+    closePopupImageButton.addEventListener('click', function () {
+        popupClose(popupImage)
+    });
+    pic.addEventListener('click', ShowPhoto);
+    function ShowPhoto(evt) {
+        popupPic.src = evt.target.src;
+        popupCaption.textContent = evt.target.alt;
+    }
+    const likeButton = cardsElement.querySelector('.cards__button-like')
+    likeButton.addEventListener('click', likeToggle);
 }
 
 // удаление карточкек
@@ -124,4 +168,8 @@ function deleteCard(evt) {
     const card = evt.target.closest('.cards__item');
     card.remove();
     console.log(card)
+}
+function likeToggle(evt) {
+    console.log('pidorass');
+    evt.target.classList.toggle('cards__button-like_active');
 }
