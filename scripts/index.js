@@ -138,7 +138,7 @@ formPopupEdit.addEventListener('submit', handleFormSubmit);
 // вызовы функция для popup_type_add
 formPopupAdd.addEventListener('submit', addFormSubmit);
 
-// карточки
+// карточки при загрузку
 for (let i = 0; i < initialCards.length; i += 1) {
     const cardsElement = cardTemplate.querySelector('.cards__item').cloneNode(true);
     cardsElement.querySelector('.cards__pic').src = initialCards[i].link;
@@ -169,7 +169,7 @@ function deleteCard(evt) {
     card.remove();
     console.log(card)
 }
+// лайк на карточках
 function likeToggle(evt) {
-    console.log('pidorass');
     evt.target.classList.toggle('cards__button-like_active');
 }
