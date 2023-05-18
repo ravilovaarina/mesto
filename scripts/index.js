@@ -93,8 +93,8 @@ formPopupAdd.addEventListener('submit', addFormSubmit);
 // вызовы функция для popup_type_edit
 openPopupEditButton.addEventListener('click', function () {
     openPopup(popupEdit);
+    openPopupEdit()
 });
-openPopupEditButton.addEventListener('click', openPopupEdit);
 
 formPopupEdit.addEventListener('submit', handleFormSubmit);
 
@@ -103,16 +103,17 @@ function createCard(link, name) {
     const newCard = cardsElement.cloneNode(true);
     newCard.querySelector('.cards__pic').src = link;
     newCard.querySelector('.cards__text').textContent = name;
-    newCard.querySelector('.cards__pic').alt = name;
 
     const trash = newCard.querySelector('.cards__button-delete'); // удаление карточки
     trash.addEventListener('click', deleteCard);
-
+    
     const pic = newCard.querySelector('.cards__pic'); // показ фотографии
-    pic.addEventListener('click', function () {
+    pic.addEventListener('click', {
+        handleEvent(evt) {
         openPopup(popupImage)
+        showPhoto(evt);
+        }
     });
-    pic.addEventListener('click', ShowPhoto);
 
     const likeButton = newCard.querySelector('.cards__button-like') // лайк
     likeButton.addEventListener('click', likeToggle);
@@ -139,7 +140,8 @@ function likeToggle(evt) {
     evt.target.classList.toggle('cards__button-like_active');
 }
 // функция для увеличения фотографии
-function ShowPhoto(evt) {
+function showPhoto(evt) {
     popupPic.src = evt.target.src;
-    popupCaption.textContent = evt.target.alt;
+    const card = evt.target.closest('.cards__item');
+    popupCaption.textContent = card.querySelector('.cards__text').textContent
 }
