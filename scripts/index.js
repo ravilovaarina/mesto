@@ -102,6 +102,7 @@ formPopupEdit.addEventListener('submit', handleFormSubmit);
 function createCard(link, name) {
     const newCard = cardsElement.cloneNode(true);
     newCard.querySelector('.cards__pic').src = link;
+    newCard.querySelector('.cards__pic').alt = name;
     newCard.querySelector('.cards__text').textContent = name;
 
     const trash = newCard.querySelector('.cards__button-delete'); // удаление карточки
@@ -143,5 +144,6 @@ function likeToggle(evt) {
 function showPhoto(evt) {
     popupPic.src = evt.target.src;
     const card = evt.target.closest('.cards__item');
-    popupCaption.textContent = card.querySelector('.cards__text').textContent
+    popupCaption.textContent = card.querySelector('.cards__text').textContent;
+    popupPic.alt = card.querySelector('.cards__text').textContent;
 }
