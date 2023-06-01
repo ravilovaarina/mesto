@@ -12,36 +12,12 @@ const popupAdd = document.querySelector('.popup_type_add');
 const formPopupAdd = document.querySelector('.popup__form_type_add');
 const placeInput = document.querySelector('#place');
 const urlInput = document.querySelector('#url');
+const submitPopupButton = document.querySelector('.popup__button');
 // объявление переменных для карточек
 const cardTemplate = document.querySelector('#cards__item').content;
 const cardsElement = cardTemplate.querySelector('.cards__item');
 const cards = document.querySelector('.cards');
-const initialCards = [
-    {
-        name: '2009',
-        link: 'https://images.unsplash.com/photo-1561871733-40a3338b8cb4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=770&q=80'
-    },
-    {
-        name: '2008',
-        link: 'https://images.unsplash.com/photo-1598461336473-b0cc035d4e35?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80'
-    },
-    {
-        name: '2007',
-        link: 'https://images.unsplash.com/photo-1601711187757-06a086b27e54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=792&q=80'
-    },
-    {
-        name: '2006',
-        link: 'https://images.unsplash.com/photo-1585022564445-3523e9b75f26?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-    },
-    {
-        name: '2005',
-        link: 'https://images.unsplash.com/photo-1575795325632-377ca781cf78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2932&q=80'
-    },
-    {
-        name: '2004',
-        link: 'https://images.unsplash.com/photo-1556515268-97d056bdb5a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80'
-    }
-];
+
 //объявление переменных для попапа с фотграфиями
 const popupImage = document.querySelector('.popup-image');
 const popupPic = document.querySelector('.popup-image__pic');
@@ -60,13 +36,13 @@ function closePopup(popupElement) {
 };
 
 // функции для popup-edit
-function openPopupEdit() {
+function fillPopupEditFields() {
     nameInput.value = profileName.textContent;
     bioInput.value = profileBio.textContent;
 };
 
 //функция для обработки формы popup_type_edit
-function handleFormSubmit(evt) {
+function handleFormEditSubmit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileBio.textContent = bioInput.value;
@@ -79,15 +55,17 @@ function addFormSubmit(evt) {
     cards.prepend(createCard(urlInput.value, placeInput.value));
     closePopup(popupAdd);
 }
-function openPopupAdd() {
+function resetPopupAddForm(submitPopupButton, config) {
     placeInput.value = null;
     urlInput.value = null;
+    console.log(submitPopupButton)
+    disableButton(submitPopupButton,config);
 };
 
 // вызовы функция для popup_type_add
 openPopupAddButton.addEventListener('click', function () {
     openPopup(popupAdd);
-    openPopupAdd()
+    resetPopupAddForm(submitPopupButton, config);
 });
 
 formPopupAdd.addEventListener('submit', addFormSubmit);
@@ -95,10 +73,10 @@ formPopupAdd.addEventListener('submit', addFormSubmit);
 // вызовы функция для popup_type_edit
 openPopupEditButton.addEventListener('click', function () {
     openPopup(popupEdit);
-    openPopupEdit()
+    fillPopupEditFields()
 });
 
-formPopupEdit.addEventListener('submit', handleFormSubmit);
+formPopupEdit.addEventListener('submit', handleFormEditSubmit);
 
 // создание карточек
 function createCard(link, name) {

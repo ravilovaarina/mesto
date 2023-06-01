@@ -13,7 +13,7 @@ const hideInputError = (formElement, inputElement, config) => {
 }
 
 const checkInputValidity = (formElement, inputElement, config) => {
-    if(!inputElement.validity.valid) {
+    if (!inputElement.validity.valid) {
         showInputError(formElement, inputElement, inputElement.validationMessage, config);
     } else {
         hideInputError(formElement, inputElement, config);
@@ -24,8 +24,11 @@ const setEventListeners = (formElement, config) => {
     const inputsList = Array.from(formElement.querySelectorAll(config.inputSelector));
     const buttonElement = formElement.querySelector(config.submitButtonSelector);
     changeSubmitButtonState(inputsList, buttonElement, config);
+    formElement.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+    });
     inputsList.forEach((inputElement) => {
-        inputElement.addEventListener('input', function (){
+        inputElement.addEventListener('input', function () {
             checkInputValidity(formElement, inputElement, config);
             changeSubmitButtonState(inputsList, buttonElement, config);
         });
@@ -35,34 +38,31 @@ const setEventListeners = (formElement, config) => {
 const enableValidation = (config) => {
     const formsList = Array.from(document.querySelectorAll(config.formSelector));
     formsList.forEach((formElement) => {
-        formElement.addEventListener('submit', function (evt) {
-            evt.preventDefault();
-        });
         setEventListeners(formElement, config);
     });
 };
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error'
-}); 
+enableValidation(config);
 
-function hasInvalidInput (inputsList) {
+function hasInvalidInput(inputsList) {
     return inputsList.some((inputElement) => {
         return !inputElement.validity.valid;
     });
 };
 
-function changeSubmitButtonState (inputsList, buttonElement, config) {
+function changeSubmitButtonState(inputsList, buttonElement, config) {
     if (hasInvalidInput(inputsList)) {
-        buttonElement.classList.add(config.inactiveButtonClass);
-        buttonElement.setAttribute("disabled", "disabled");
+        disableButton (buttonElement, config);
     } else {
-        buttonElement.classList.remove(config.inactiveButtonClass);
-        buttonElement.removeAttribute('disabled');
+        enableButton (buttonElement, config);
     }
 }
+function disableButton (buttonElement, config) {
+    buttonElement.classList.add(config.inactiveButtonClass);
+    buttonElement.setAttribute("disabled", true);
+};
+
+function enableButton (buttonElement, config) {
+    buttonElement.classList.remove(config.inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
+};
