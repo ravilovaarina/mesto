@@ -52,9 +52,11 @@ const closeButtons = document.querySelectorAll('.popup__button-closed');
 // функции для popup
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
+    document.addEventListener('keydown', handleEscPress);
 };
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
+    document.removeEventListener('keydown', handleEscPress);
 };
 
 // функции для popup-edit
@@ -115,6 +117,11 @@ function createCard(link, name) {
         showPhoto(evt);
         }
     });
+    pic.addEventListener('keydown', function (evt) {
+        if (evt.key === 'Escape') {
+            closePopup(popupImage);
+          };
+    });
 
     const likeButton = newCard.querySelector('.cards__button-like') // лайк
     likeButton.addEventListener('click', likeToggle);
@@ -147,3 +154,21 @@ function showPhoto(evt) {
     popupCaption.textContent = card.querySelector('.cards__text').textContent;
     popupPic.alt = card.querySelector('.cards__text').textContent;
 }
+
+// закрытие
+const handleEscPress = (evt) => {
+    const popupOpened = document.querySelector('.popup_opened');
+    if (evt.key === 'Escape') {
+      closePopup(popupOpened);
+    };
+  };
+
+  const popupCloseClickOverlay = document.querySelectorAll('.popup'); 
+  popupCloseClickOverlay.forEach((item) => {
+    item.addEventListener('click', (evt) => {
+      if (evt.target === evt.currentTarget) {
+        const overlayClosest = evt.target.closest('.popup');
+        closePopup(overlayClosest);
+      };
+    });
+  });
