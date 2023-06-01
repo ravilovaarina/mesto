@@ -12,7 +12,7 @@ const popupAdd = document.querySelector('.popup_type_add');
 const formPopupAdd = document.querySelector('.popup__form_type_add');
 const placeInput = document.querySelector('#place');
 const urlInput = document.querySelector('#url');
-const submitPopupButton = document.querySelector('.popup__button');
+const submitPopupButton = popupAdd.querySelector('.popup__button');
 // объявление переменных для карточек
 const cardTemplate = document.querySelector('#cards__item').content;
 const cardsElement = cardTemplate.querySelector('.cards__item');
@@ -58,8 +58,7 @@ function addFormSubmit(evt) {
 function resetPopupAddForm(submitPopupButton, config) {
     placeInput.value = null;
     urlInput.value = null;
-    console.log(submitPopupButton)
-    disableButton(submitPopupButton,config);
+    disableButton(submitPopupButton, config);
 };
 
 // вызовы функция для popup_type_add
@@ -81,24 +80,24 @@ formPopupEdit.addEventListener('submit', handleFormEditSubmit);
 // создание карточек
 function createCard(link, name) {
     const newCard = cardsElement.cloneNode(true);
-    newCard.querySelector('.cards__pic').src = link;
-    newCard.querySelector('.cards__pic').alt = name;
+    const pic = newCard.querySelector('.cards__pic'); // показ фотографии
+    pic.src = link;
+    pic.alt = name;
     newCard.querySelector('.cards__text').textContent = name;
 
     const trash = newCard.querySelector('.cards__button-delete'); // удаление карточки
     trash.addEventListener('click', deleteCard);
-    
-    const pic = newCard.querySelector('.cards__pic'); // показ фотографии
+
     pic.addEventListener('click', {
         handleEvent(evt) {
-        openPopup(popupImage)
-        showPhoto(evt);
+            openPopup(popupImage)
+            showPhoto(evt);
         }
     });
     pic.addEventListener('keydown', function (evt) {
         if (evt.key === 'Escape') {
             closePopup(popupImage);
-          };
+        };
     });
 
     const likeButton = newCard.querySelector('.cards__button-like') // лайк
@@ -110,9 +109,9 @@ initialCards.forEach((card) => {
     cards.append(createCard(card.link, card.name));
 });
 // крестики
-closeButtons.forEach((button) => { 
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+closeButtons.forEach((button) => {
+    const popup = button.closest('.popup');
+    button.addEventListener('click', () => closePopup(popup));
 });
 
 // удаление карточкек
@@ -128,25 +127,23 @@ function likeToggle(evt) {
 // функция для увеличения фотографии
 function showPhoto(evt) {
     popupPic.src = evt.target.src;
-    const card = evt.target.closest('.cards__item');
-    popupCaption.textContent = card.querySelector('.cards__text').textContent;
-    popupPic.alt = card.querySelector('.cards__text').textContent;
+    popupCaption.textContent = evt.target.alt;;
+    popupPic.alt = evt.target.alt;;
 }
 
 // закрытие
 const handleEscPress = (evt) => {
-    const popupOpened = document.querySelector('.popup_opened');
     if (evt.key === 'Escape') {
-      closePopup(popupOpened);
+        const popupOpened = document.querySelector('.popup_opened');
+        closePopup(popupOpened);
     };
-  };
+};
 
-  const popupCloseClickOverlay = document.querySelectorAll('.popup'); 
-  popupCloseClickOverlay.forEach((item) => {
+const popupCloseClickOverlay = document.querySelectorAll('.popup');
+popupCloseClickOverlay.forEach((item) => {
     item.addEventListener('click', (evt) => {
-      if (evt.target === evt.currentTarget) {
-        const overlayClosest = evt.target.closest('.popup');
-        closePopup(overlayClosest);
-      };
+        if (evt.target === evt.currentTarget) {
+            closePopup(item);
+        };
     });
-  });
+});
