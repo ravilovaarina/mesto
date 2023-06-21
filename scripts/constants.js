@@ -33,3 +33,5 @@ const config = {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__input-error'
 }
+
+export { initialCards, config }
