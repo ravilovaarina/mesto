@@ -55,7 +55,7 @@ function handleFormEditSubmit(evt) {
 function resetPopupAddForm(submitPopupButton, config) {
     placeInput.value = null;
     urlInput.value = null;
-    addCardValidator.enableValidation();
+    addCardValidator.disableButton();
 };
 
 // вызовы функция для popup_type_add
@@ -79,7 +79,7 @@ closeButtons.forEach((button) => {
 });
 
 // закрытие
-const handleEscPress = (evt) => {
+export const handleEscPress = (evt) => {
     if (evt.key === 'Escape') {
         const popupOpened = document.querySelector('.popup_opened');
         closePopup(popupOpened);
@@ -96,10 +96,7 @@ popupCloseClickOverlay.forEach((item) => {
 });
 
 initialCards.forEach((item) => {
-    const card = new Card(item, '#cards__item');
-    const CardElement = card.generateCard();
-
-    cards.append(CardElement);
+    createCard(item);
 })
 
 function addFormSubmit(evt) {
@@ -108,12 +105,25 @@ function addFormSubmit(evt) {
         name: placeInput.value,
         link: urlInput.value,
     }
-    const card = new Card(newCardData, '#cards__item');
-    const CardElement = card.generateCard();
-    cards.prepend(CardElement);
+    createCard(newCardData);
     closePopup(popupAdd);
 }
 
 formPopupAdd.addEventListener('submit', addFormSubmit);
 
+function createCard(data) {
+    const card = new Card(data, '#cards__item');
+    const cardElement = card.generateCard();
+    cards.prepend(cardElement);
+}
 
+export function handleOpenPopup(link, name) {
+    const popupElement = document.querySelector('.popup-image');
+    const popupImagePic = document.querySelector('.popup-image__pic');
+    const popupCaption = document.querySelector('.popup-image__caption');
+    popupImagePic.src = link;
+    popupImagePic.alt = name;
+    popupCaption.textContent = name;
+    openPopup(popupElement)
+    document.addEventListener('keydown', handleEscPress);
+}
