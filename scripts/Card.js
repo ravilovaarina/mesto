@@ -17,18 +17,19 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-        this._likeButton = this._element.querySelector('.cards__button-like')
+        this._likeButton = this._element.querySelector('.cards__button-like');
+        this._image = this._element.querySelector('.cards__pic')
         this._setEventListeners();
 
-        this._element.querySelector('.cards__pic').src = this._src;
-        this._element.querySelector('.cards__pic').alt = this._caption;
+        this._image.src = this._src;
+        this._image.alt = this._caption;
         this._element.querySelector('.cards__text').textContent = this._caption;
 
         return this._element;
     }
 
     _setEventListeners() {
-        this._element.querySelector('.cards__pic').addEventListener('click', () => {
+        this._image.addEventListener('click', () => {
             handleOpenPopup(this._src, this._caption)
         });
 
