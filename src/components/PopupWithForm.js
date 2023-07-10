@@ -20,17 +20,14 @@ export default class PopupWithForm extends Popup {
         super.setEventListeners();
         const submitButton = this._form.querySelector('.popup__button');
         this._form.addEventListener('submit', (evt) => {
-            if (submitButton.classList.contains('popup__button_disabled')) {return false}
-            else {
-                evt.preventDefault();
-                this._sumbitHandler(this._getInputValues());
-                this.close();
-            }
+            evt.preventDefault();
+            this._sumbitHandler(this._getInputValues());
+            this.close();
         }
         )
     }
 
-    close(){
+    close() {
         super.close();
         this._form.reset();
     }

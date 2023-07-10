@@ -9,10 +9,12 @@ export default class UserInfo {
             name: this._name.textContent,
             bio: this._bio.textContent,
         }
+
+        return userData
     }
 
-    setUserInfo(nameValue, bioValue){
-        this._name.textContent = nameValue.value;
-        this._bio.textContent = bioValue.value;
+    setUserInfo(info){
+        this._name.textContent = info.name;
+        this._bio.textContent = info.bio;
     }
 }
