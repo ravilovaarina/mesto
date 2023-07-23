@@ -1,16 +1,19 @@
 import './index.css';
-import { config, initialCards } from '../utils/constants.js';
+import { apiConfig, config } from '../utils/constants.js';
 import Card from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/API.js';
+import PopupWithRemoval from '../components/PopupWithRemoval.js';
 // объявление переменных для popup_type_edit
 const openPopupEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
 const profileName = document.querySelector('.profile__name');
 const profileBio = document.querySelector('.profile__bio');
+const avatar = document.querySelector('.profile__avatar');
 const nameInput = document.querySelector('#name');
 const bioInput = document.querySelector('#bio');
 // объявление переменных для popup_type_add
@@ -21,8 +24,6 @@ export const urlInput = document.querySelector('#url');
 // объявление переменных для карточек
 const cards = document.querySelector('.cards');
 const cardsTemplate = document.querySelector('#cards__item').content
-const imageInPopup = document.querySelector(".popup-image__pic");
-const nameOfImageInPopup = document.querySelector(".popup-image__caption");
 
 // попап с карточками
 const popupImage = document.querySelector('.popup-image')
@@ -31,33 +32,75 @@ const profileValidator = new FormValidator(config, popupEdit);
 const addCardValidator = new FormValidator(config, popupAdd);
 profileValidator.enableValidation();
 addCardValidator.enableValidation();
+let userId;
+const popupDelete = document.querySelector('.popup_type_delete')
+const popupAvatar = document.querySelector('.popup_type_avatar')
+const user = new UserInfo({
+    nameSelector: profileName,
+    bioSelector: profileBio,
+    avatarSelector: '.profile__avatar',
+})
 
-const popupWithImage = new PopupWithImage(popupImage, imageInPopup, nameOfImageInPopup);
-const handleCardClick = (placeImage, placeName) => {
-    popupWithImage.open(placeImage, placeName);
-}
+const api = new Api(apiConfig);
+Promise.all([api.getInfo(), api.getInitialCards()])
+    .then(([resUser, resCard]) => {
+        userId = resUser._id;
+        user.setUserInfo(resUser);
+        user.setUserAvatar(resUser);
+        defaultCards.renderItems(resCard, userId);
+    })
+
+const popupWithImage = new PopupWithImage(popupImage);
 
 popupWithImage.setEventListeners();
 
-function createCard(place) {
-    const card = new Card(place, cardsTemplate, handleCardClick);
-    const newPlace = card.generateCard();
+function createCard(data, user) {
+    const card = new Card({
+        data: data, userId: user, templateSelector: cardsTemplate,
+        handleCardClick: () => {
+            popupWithImage.open(data);
+        },
 
-    defaultCards.setItem(newPlace);
+        handleCardDelete: (cardId, cardElement) => {
+            popupFormDelete.open(cardId, cardElement);
+        },
+
+        handleCardLike: (cardId) => {
+            api.putCardLike(cardId)
+                .then((res) => {
+                    card.renderCardLike(res)
+                })
+        },
+
+        handleCardDeleteLike: (cardId) => {
+            api.deleteCardLike(cardId)
+                .then((res) => {
+                    card.renderCardLike(res)
+                })
+                .catch((err) => alert(err))
+        }
+    });
+    return card.generateCard();
 }
 
 const defaultCards = new Section({
-    items: initialCards,
-    renderer: (place) => {
-        createCard(place);
+    renderer: (item, userID) => {
+        defaultCards.setItem(createCard(item, userID));
     }
 }, cards)
-defaultCards.renderItems();
 
-const placePopup = new PopupWithForm(popupAdd, (place) => {
-    createCard(place);
+const placePopup = new PopupWithForm(popupAdd, (data) => {
+    placePopup.renderLoading(true, 'Сохранение...');
+    api.addNewCard(data)
+        .then((res) => {
+            defaultCards.setItem(createCard(res, userId));
+            placePopup.close();
+        })
+        .catch((err) => alert(err))
+        .finally(() => {
+            aboutPopup.renderLoading(false);
+        })
 })
-
 placePopup.setEventListeners();
 
 openPopupAddButton.addEventListener('click', () => {
@@ -65,14 +108,19 @@ openPopupAddButton.addEventListener('click', () => {
     addCardValidator.disableButton();
 });
 
-const user = new UserInfo({
-    nameSelector: profileName,
-    bioSelector: profileBio
-})
 
-const aboutPopup = new PopupWithForm(popupEdit, (info) => {
-    console.log(info);
-    user.setUserInfo(info);
+
+const aboutPopup = new PopupWithForm(popupEdit, (data) => {
+    aboutPopup.renderLoading(true, 'Сохранение...');
+    api.editProfile(data)
+        .then((res) => {
+            user.setUserInfo(res);
+            aboutPopup.close();
+        })
+        .catch((err) => alert(err))
+        .finally(() => {
+            aboutPopup.renderLoading(false);
+        })
 })
 
 openPopupEditButton.addEventListener('click', () => {
@@ -83,3 +131,34 @@ openPopupEditButton.addEventListener('click', () => {
     profileValidator.disableButton();
 })
 aboutPopup.setEventListeners();
+
+
+const popupFormDelete = new PopupWithRemoval(popupDelete, {
+    submitCallback: (id, card) => {
+        popupFormDelete.renderLoading(true, 'Удаление...');
+        api.deleteCard(id)
+            .then(() => {
+                card.remove();
+                card = null;
+                popupFormDelete.close();
+            })
+            .catch((err) => alert(err))
+            .finally(() => {
+                popupFormDelete.renderLoading(false);
+            })
+    }
+})
+popupFormDelete.setEventListeners();
+
+const avatarPopup = new PopupWithForm(popupAvatar, (data) => {
+    avatarPopup.renderLoading(true, 'Загрузка...');
+    api.setUserAvatar(data)
+        .then((res) => {
+            user.setUserAvatar(res);
+            avatarPopup.close();
+        })
+        .catch((err) => alert(err))
+        .finally(() => {
+            avatarPopup.renderLoading(false);
+        })
+})
