@@ -25,16 +25,20 @@ export const urlInput = document.querySelector('#url');
 const cards = document.querySelector('.cards');
 const cardsTemplate = document.querySelector('#cards__item').content
 
+const popupAvatar = document.querySelector('.popup_type_avatar')
+
 // попап с карточками
 const popupImage = document.querySelector('.popup-image')
 //валидация
 const profileValidator = new FormValidator(config, popupEdit);
 const addCardValidator = new FormValidator(config, popupAdd);
+const avatarValidator = new FormValidator(config, popupAvatar);
+avatarValidator.enableValidation();
 profileValidator.enableValidation();
 addCardValidator.enableValidation();
 let userId;
 const popupDelete = document.querySelector('.popup_type_delete')
-const popupAvatar = document.querySelector('.popup_type_avatar')
+const changeAvatarButton = document.querySelector('.profile__avatar-group')
 const user = new UserInfo({
     nameSelector: profileName,
     bioSelector: profileBio,
@@ -161,4 +165,9 @@ const avatarPopup = new PopupWithForm(popupAvatar, (data) => {
         .finally(() => {
             avatarPopup.renderLoading(false);
         })
+})
+avatarPopup.setEventListeners();
+changeAvatarButton.addEventListener('click',  () => {
+    avatarPopup.open();
+    addCardValidator.disableButton();
 })
