@@ -4,7 +4,11 @@ export default class Section {
         this._container = containerSelector;
     }
 
-    setItem(element) {
+    append(element) {
+        this._container.append(element);
+    }
+
+    prepend(element) {
         this._container.prepend(element);
     }
 

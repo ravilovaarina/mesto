@@ -21,7 +21,6 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
-            console.log('hui')
             evt.preventDefault();
             this._sumbitHandler(this._getInputValues());
             this.close();

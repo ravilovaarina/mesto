@@ -14,7 +14,8 @@ export default class PopupWithRemoval extends Popup {
 
     setEventListeners(){
         super.setEventListeners();
-        this._form.addEventListener('submit', ()=> {
+        this._form.addEventListener('submit', (evt)=> {
+            evt.preventDefault();
             this._submitCallback(this.id, this.card)
         })
     }

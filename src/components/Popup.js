@@ -2,7 +2,7 @@ export default class Popup {
     constructor(popup) {
         this._popup = popup;
         this._handleEscClose = this._handleEscClose.bind(this);
-        this._submitButton = this._popup.querySelector('.popup__button')
+        this._submitButton = this._popup.querySelector('.popup__button');
     }
 
     open() {
@@ -36,12 +36,12 @@ export default class Popup {
         })
     }
 
-    renderLoading(isLoading, displayText){
-        if(isLoading){
-          this._submitButton.textContent = displayText;
-        }else{
-            console.log()
+    renderLoading(isLoading, displayText) {
+        if (isLoading) {
+            this._defaultText = this._submitButton.textContent;
+            this._submitButton.textContent = displayText;
+        } else {
             this._submitButton.textContent = this._defaultText;
         }
-      }
+    }
 }

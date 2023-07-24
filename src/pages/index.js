@@ -89,7 +89,7 @@ function createCard(data, user) {
 
 const defaultCards = new Section({
     renderer: (item, userID) => {
-        defaultCards.setItem(createCard(item, userID));
+        defaultCards.append(createCard(item, userID));
     }
 }, cards)
 
@@ -97,12 +97,12 @@ const placePopup = new PopupWithForm(popupAdd, (data) => {
     placePopup.renderLoading(true, 'Сохранение...');
     api.addNewCard(data)
         .then((res) => {
-            defaultCards.setItem(createCard(res, userId));
+            defaultCards.prepend(createCard(res, userId));
             placePopup.close();
         })
         .catch((err) => alert(err))
         .finally(() => {
-            aboutPopup.renderLoading(false);
+            placePopup.renderLoading(false);
         })
 })
 placePopup.setEventListeners();
@@ -130,7 +130,7 @@ const aboutPopup = new PopupWithForm(popupEdit, (data) => {
 openPopupEditButton.addEventListener('click', () => {
     const userInfo = user.getUserInfo();
     nameInput.value = userInfo.name;
-    bioInput.value = userInfo.bio;
+    bioInput.value = userInfo.about;
     aboutPopup.open();
     profileValidator.disableButton();
 })
@@ -142,8 +142,7 @@ const popupFormDelete = new PopupWithRemoval(popupDelete, {
         popupFormDelete.renderLoading(true, 'Удаление...');
         api.deleteCard(id)
             .then(() => {
-                card.remove();
-                card = null;
+                card.deleteCard();
                 popupFormDelete.close();
             })
             .catch((err) => alert(err))
@@ -155,6 +154,7 @@ const popupFormDelete = new PopupWithRemoval(popupDelete, {
 popupFormDelete.setEventListeners();
 
 const avatarPopup = new PopupWithForm(popupAvatar, (data) => {
+    console.log(data)
     avatarPopup.renderLoading(true, 'Загрузка...');
     api.setUserAvatar(data)
         .then((res) => {
@@ -169,5 +169,5 @@ const avatarPopup = new PopupWithForm(popupAvatar, (data) => {
 avatarPopup.setEventListeners();
 changeAvatarButton.addEventListener('click',  () => {
     avatarPopup.open();
-    addCardValidator.disableButton();
+    avatarValidator.disableButton();
 })

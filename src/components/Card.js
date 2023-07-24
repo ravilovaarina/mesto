@@ -17,7 +17,7 @@ export default class Card {
     }
 
     _getTemplate() {
-        return this._templateSelector.cloneNode(true);
+        return this._templateSelector.querySelector('.cards__item').cloneNode(true);
     }
 
     generateCard() {
@@ -60,7 +60,7 @@ export default class Card {
             this._handleCardLike(this.idCard);
         }
     }
-    
+
 
     renderCardLike(card) {
         this._dataLikes = card.likes;
@@ -70,12 +70,16 @@ export default class Card {
             this._likesCount.textContent = this._dataLikes.length;
         }
 
-        if(this._likedCard()){
+        if (this._likedCard()) {
             this._likeButton.classList.add('cards__button-like_active');
-        }else{
+        } else {
             this._likeButton.classList.remove('cards__button-like_active');
         }
     }
 
+    deleteCard() {
+        this._element.remove();
+        this._element = null;
+    };
 }
 
