@@ -154,7 +154,6 @@ const popupFormDelete = new PopupWithRemoval(popupDelete, {
 popupFormDelete.setEventListeners();
 
 const avatarPopup = new PopupWithForm(popupAvatar, (data) => {
-    console.log(data)
     avatarPopup.renderLoading(true, 'Загрузка...');
     api.setUserAvatar(data)
         .then((res) => {
