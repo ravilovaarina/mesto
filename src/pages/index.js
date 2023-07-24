@@ -74,6 +74,7 @@ function createCard(data, user) {
                 .then((res) => {
                     card.renderCardLike(res)
                 })
+                .catch((err) => alert(err))
         },
 
         handleCardDeleteLike: (cardId) => {
